@@ -2110,7 +2110,7 @@ function App() {
           {page !== "admin" && <AdBanner ads={ads} position="bottom" />}
           {page !== "admin" && page !== pages[pages.length - 1] && page !== "Video" && page !== "Видео" && <BreakingBanner lang={lang} stories={stories} onOpen={openStory} />}
           {page !== "admin" && page !== pages[pages.length - 1] && page !== "Video" && page !== "Видео" && <MediaSection lang={lang} items={dynamicMediaItems} onOpen={openStory} />}
-          {page !== "admin" && <Special t={t} siteConfig={siteConfig} />}
+          {page !== "admin" && <Special t={t} siteConfig={siteConfig} lang={lang} />}
         </>
       )}
 
@@ -2159,10 +2159,10 @@ function App() {
 
 function BreakingBanner({ lang, stories, onOpen }) {
   const isUz = lang !== "ru";
-  const label = isUz ? "TEZKOR" : "СРОЧНО";
-  const title = isUz ? "Bugungi eng dolzarb xabarlar" : "Самые актуальные новости сегодня";
-  const sub = isUz ? "Tahririyat tanlovi" : "Выбор редакции";
-  const btnLabel = isUz ? "Barchasini o'qish" : "Читать все";
+  const label = lang === "ru" ? "СРОЧНО" : (lang === "uzk" ? convertText("TEZKOR", true) : "TEZKOR");
+  const title = lang === "ru" ? "Самые актуальные новости сегодня" : (lang === "uzk" ? convertText("Bugungi eng dolzarb xabarlar", true) : "Bugungi eng dolzarb xabarlar");
+  const sub = lang === "ru" ? "Выбор редакции" : (lang === "uzk" ? convertText("Tahririyat tanlovi", true) : "Tahririyat tanlovi");
+  const btnLabel = lang === "ru" ? "Читать все" : (lang === "uzk" ? convertText("Barchasini o'qish", true) : "Barchasini o'qish");
   const picks = stories.slice(0, 3);
 
   return (
@@ -2199,12 +2199,12 @@ function MediaSection({ lang, items, onOpen }) {
   const videos = safeItems.filter(([type]) => type === "video");
   const photos = safeItems.filter(([type]) => type === "photo");
 
-  const videoLabel = isUz ? "Video" : "Видео";
-  const photoLabel = isUz ? "Foto" : "Фото";
-  const videoNote = isUz ? "Kunning eng muhim videolari" : "Главные видео дня";
-  const photoNote = isUz ? "Fotoreportajlar va vizual materiallar" : "Фоторепортажи и визуальные материалы";
-  const watchLabel = isUz ? "Tomosha qilish →" : "Смотреть →";
-  const viewLabel = isUz ? "Ko'rish →" : "Посмотреть →";
+  const videoLabel = lang === "ru" ? "Видео" : (lang === "uzk" ? convertText("Video", true) : "Video");
+  const photoLabel = lang === "ru" ? "Фото" : (lang === "uzk" ? convertText("Foto", true) : "Foto");
+  const videoNote = lang === "ru" ? "Главные видео дня" : (lang === "uzk" ? convertText("Kunning eng muhim videolari", true) : "Kunning eng muhim videolari");
+  const photoNote = lang === "ru" ? "Фоторепортажи и визуальные материалы" : (lang === "uzk" ? convertText("Fotoreportajlar va vizual materiallar", true) : "Fotoreportajlar va vizual materiallar");
+  const watchLabel = lang === "ru" ? "Смотреть →" : (lang === "uzk" ? convertText("Tomosha qilish →", true) : "Tomosha qilish →");
+  const viewLabel = lang === "ru" ? "Посмотреть →" : (lang === "uzk" ? convertText("Ko'rish →", true) : "Ko'rish →");
 
   function MediaBlock({ type, blockItems, title, note }) {
     if (!blockItems.length) return null;
@@ -2228,7 +2228,7 @@ function MediaSection({ lang, items, onOpen }) {
                   type: "video",
                   title: featured[1],
                   time: featured[2] ? (featured[2].split("|")[1] || "").trim() : "",
-                  category: featured[2] ? (featured[2].split("|")[0] || "").trim() : (isUz ? "Video" : "Видео"),
+                  category: featured[2] ? (featured[2].split("|")[0] || "").trim() : (lang === "ru" ? "Видео" : (lang === "uzk" ? convertText("Video", true) : "Video")),
                   image: featured[3],
                   url: featured[4],
                   summary: featured[5] || "",
@@ -2249,7 +2249,7 @@ function MediaSection({ lang, items, onOpen }) {
               </div>
               <div className="media-featured-body">
                 <strong>{featured[1]}</strong>
-                <button className="media-play-btn" type="button">{isUz ? "Tomosha qilish →" : "Смотреть →"}</button>
+                <button className="media-play-btn" type="button">{lang === "ru" ? "Смотреть →" : (lang === "uzk" ? convertText("Tomosha qilish →", true) : "Tomosha qilish →")}</button>
               </div>
             </article>
             <div className="media-v2-list">
@@ -2261,7 +2261,7 @@ function MediaSection({ lang, items, onOpen }) {
                       type: "video",
                       title: itemTitle,
                       time: meta ? (meta.split("|")[1] || "").trim() : "",
-                      category: meta ? (meta.split("|")[0] || "").trim() : (isUz ? "Video" : "Видео"),
+                      category: meta ? (meta.split("|")[0] || "").trim() : (lang === "ru" ? "Видео" : (lang === "uzk" ? convertText("Video", true) : "Video")),
                       image: image,
                       url: url,
                       summary: summary || "",
@@ -2295,7 +2295,7 @@ function MediaSection({ lang, items, onOpen }) {
                     type: "photo",
                     title: itemTitle,
                     time: meta ? (meta.split("|")[1] || "").trim() : "",
-                    category: meta ? (meta.split("|")[0] || "").trim() : (isUz ? "Foto" : "Фото"),
+                    category: meta ? (meta.split("|")[0] || "").trim() : (lang === "ru" ? "Фото" : (lang === "uzk" ? convertText("Foto", true) : "Foto")),
                     image: image,
                     url: url || "",
                     summary: summary || "",
@@ -2516,7 +2516,7 @@ function WeatherBar({ lang }) {
               <span className="weather-wind">💨 {weather.wind} km/h</span>
             </>
           ) : (
-            <span className="weather-loading">🌡 {isUz ? "Yuklanmoqda..." : "Загрузка..."}</span>
+            <span className="weather-loading">🌡 {lang === "ru" ? "Загрузка..." : (lang === "uzk" ? convertText("Yuklanmoqda...", true) : "Yuklanmoqda...")}</span>
           )}
         </div>
         <div className="weather-right">
@@ -2801,7 +2801,7 @@ function Special({ t, siteConfig }) {
   const kicker   = cfg?.kicker   || t.special;
   const title    = cfg?.title    || t.specialTitle;
   const text     = cfg?.text     || t.specialText;
-  const badge    = cfg?.badge    || (isUz ? "Jonli tahririyat" : "Живая редакция");
+  const badge    = cfg?.badge    || (lang === "ru" ? "Живая редакция" : (lang === "uzk" ? convertText("Jonli tahririyat", true) : "Jonli tahririyat"));
   const imgSrc   = cfg?.image    || images.newsroom;
   const features = cfg?.features
     ? cfg.features.split(",").map(f => f.trim()).filter(Boolean)
@@ -2810,10 +2810,10 @@ function Special({ t, siteConfig }) {
       : ["Быстрые новости", "Независимый анализ", "На двух языках", "Надёжный источник"]);
 
   const stats = [
-    { num: cfg?.stat1 || "24/7", label: cfg?.stat1label || (isUz ? "Monitoring" : "Мониторинг") },
-    { num: cfg?.stat2 || "7",    label: cfg?.stat2label || (isUz ? "Bo'lim" : "Разделов") },
-    { num: cfg?.stat3 || "2",    label: cfg?.stat3label || (isUz ? "Til" : "Языка") },
-    { num: cfg?.stat4 || "100+", label: cfg?.stat4label || (isUz ? "Maqola" : "Статей") },
+    { num: cfg?.stat1 || "24/7", label: cfg?.stat1label || (lang === "ru" ? "Мониторинг" : (lang === "uzk" ? convertText("Monitoring", true) : "Monitoring")) },
+    { num: cfg?.stat2 || "7",    label: cfg?.stat2label || (lang === "ru" ? "Разделов" : (lang === "uzk" ? convertText("Bo'lim", true) : "Bo'lim")) },
+    { num: cfg?.stat3 || "2",    label: cfg?.stat3label || (lang === "ru" ? "Языка" : (lang === "uzk" ? convertText("Til", true) : "Til")) },
+    { num: cfg?.stat4 || "100+", label: cfg?.stat4label || (lang === "ru" ? "Статей" : (lang === "uzk" ? convertText("Maqola", true) : "Maqola")) },
   ];
 
   return (
@@ -2877,10 +2877,10 @@ function JournalPage({ t, lang }) {
         <div className="section-head">
           <div>
             <h2 className="section-title">
-              {isUz ? "Gazeta va Jurnallar" : "Газеты и журналы"}
+              {lang === "ru" ? "Газеты и журналы" : (lang === "uzk" ? convertText("Gazeta va Jurnallar", true) : "Gazeta va Jurnallar")}
             </h2>
             <p className="section-note">
-              {isUz ? "Ishonch.uz nashr etgan jurnallar va gazetalarning PDF sonlarini yuklab oling." : "Скачайте PDF-выпуски журналов и газет, опубликованных Ishonch.uz."}
+              {lang === "ru" ? "Скачайте PDF-выпуски журналов и газет, опубликованных Ishonch.uz." : (lang === "uzk" ? convertText("Ishonch.uz nashr etgan jurnallar va gazetalarning PDF sonlarini yuklab oling.", true) : "Ishonch.uz nashr etgan jurnallar va gazetalarning PDF sonlarini yuklab oling.")}
             </p>
           </div>
         </div>
@@ -2938,13 +2938,13 @@ function JournalPage({ t, lang }) {
                   width: "100%",
                   marginTop: "auto"
                 }}>
-                  ⬇ {isUz ? "PDF yuklab olish" : "Скачать PDF"}
+                  ⬇ {lang === "ru" ? "Скачать PDF" : (lang === "uzk" ? convertText("PDF yuklab olish", true) : "PDF yuklab olish")}
                 </a>
               </div>
             ))}
             {journals.length === 0 && (
               <div style={{gridColumn: "1 / -1", textAlign: "center", padding: "40px", color: "var(--muted)"}}>
-                {isUz ? "Hozircha yuklangan jurnallar mavjud emas." : "Журналы пока не загружены."}
+                {lang === "ru" ? "Журналы пока не загружены." : (lang === "uzk" ? convertText("Hozircha yuklangan jurnallar mavjud emas.", true) : "Hozircha yuklangan jurnallar mavjud emas.")}
               </div>
             )}
           </div>
@@ -2968,7 +2968,7 @@ function ContactPage({ t, page, siteConfig }) {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!name || !message) {
-      setError(isUz ? "Ism va xabar kiritilishi shart" : "Имя и сообщение обязательны");
+      setError(lang === "ru" ? "Имя и сообщение обязательны" : (lang === "uzk" ? convertText("Ism va xabar kiritilishi shart", true) : "Ism va xabar kiritilishi shart"));
       return;
     }
     setLoadingForm(true);
@@ -3011,9 +3011,9 @@ function ContactPage({ t, page, siteConfig }) {
             {(() => {
               const isUz = t.close === "Yopish";
               const contacts = siteConfig && (siteConfig.phone || siteConfig.email || siteConfig.address) ? [
-                [isUz ? "Telefon" : "Телефон", siteConfig.phone || "+998 935241107"],
+                [lang === "ru" ? "Телефон" : (lang === "uzk" ? convertText("Telefon", true) : "Telefon"), siteConfig.phone || "+998 935241107"],
                 ["Email", siteConfig.email || "vatan2024@yandex.ru"],
-                [isUz ? "Manzil" : "Адрес", siteConfig.address || "Toshkent shahri, Buxoro ko'chasi, 24-uy"]
+                [lang === "ru" ? "Адрес" : (lang === "uzk" ? convertText("Manzil", true) : "Manzil"), siteConfig.address || "Toshkent shahri, Buxoro ko'chasi, 24-uy"]
               ] : t.contact;
               return contacts.map(([title, text]) => (
                 <div className="contact-card" key={title} style={{padding: "16px", background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "8px"}}>
@@ -3026,29 +3026,29 @@ function ContactPage({ t, page, siteConfig }) {
 
           <div className="contact-form-wrap" style={{padding: "24px", background: "var(--surface)", border: "1px solid var(--line)", borderRadius: "8px"}}>
             <h3 style={{marginBottom: "16px", color: "var(--ink)", marginTop: 0}}>
-              {isUz ? "Tahririyatga xabar yuborish" : "Отправить сообщение"}
+              {lang === "ru" ? "Отправить сообщение" : (lang === "uzk" ? convertText("Tahririyatga xabar yuborish", true) : "Tahririyatga xabar yuborish")}
             </h3>
             {sent ? (
               <div style={{color: "#16a34a", fontWeight: "600", padding: "16px", background: "rgba(22, 163, 74, 0.1)", borderRadius: "6px"}}>
-                {isUz ? "✓ Xabaringiz yuborildi! Tez orada ko'rib chiqamiz." : "✓ Сообщение отправлено! Мы скоро ответим."}
+                {lang === "ru" ? "✓ Сообщение отправлено! Мы скоро ответим." : (lang === "uzk" ? convertText("✓ Xabaringiz yuborildi! Tez orada ko'rib chiqamiz.", true) : "✓ Xabaringiz yuborildi! Tez orada ko'rib chiqamiz.")}
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{display: "flex", flexDirection: "column", gap: "12px"}}>
                 {error && <div style={{color: "var(--brand)", fontSize: "13px"}}>⚠️ {error}</div>}
                 <div style={{display: "flex", flexDirection: "column", gap: "4px"}}>
-                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{isUz ? "Ismingiz *" : "Имя *"}</span>
+                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{lang === "ru" ? "Имя *" : (lang === "uzk" ? convertText("Ismingiz *", true) : "Ismingiz *")}</span>
                   <input value={name} onChange={e => setName(e.target.value)} required style={{padding:"8px", borderRadius:"4px", border:"1px solid var(--line)", background:"var(--bg)", color:"var(--ink)"}} />
                 </div>
                 <div style={{display: "flex", flexDirection: "column", gap: "4px"}}>
-                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{isUz ? "Email manzilingiz" : "Email"}</span>
+                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{lang === "ru" ? "Email" : (lang === "uzk" ? convertText("Email manzilingiz", true) : "Email manzilingiz")}</span>
                   <input type="email" value={email} onChange={e => setEmail(e.target.value)} style={{padding:"8px", borderRadius:"4px", border:"1px solid var(--line)", background:"var(--bg)", color:"var(--ink)"}} />
                 </div>
                 <div style={{display: "flex", flexDirection: "column", gap: "4px"}}>
-                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{isUz ? "Mavzu" : "Тема"}</span>
+                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{lang === "ru" ? "Тема" : (lang === "uzk" ? convertText("Mavzu", true) : "Mavzu")}</span>
                   <input value={subject} onChange={e => setSubject(e.target.value)} style={{padding:"8px", borderRadius:"4px", border:"1px solid var(--line)", background:"var(--bg)", color:"var(--ink)"}} />
                 </div>
                 <div style={{display: "flex", flexDirection: "column", gap: "4px"}}>
-                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{isUz ? "Xabar matni *" : "Текст сообщения *"}</span>
+                  <span style={{fontSize: "13px", fontWeight: "500", color: "var(--ink)"}}>{lang === "ru" ? "Текст сообщения *" : (lang === "uzk" ? convertText("Xabar matni *", true) : "Xabar matni *")}</span>
                   <textarea rows="4" value={message} onChange={e => setMessage(e.target.value)} required style={{padding:"8px", borderRadius:"4px", border:"1px solid var(--line)", background:"var(--bg)", color:"var(--ink)"}} />
                 </div>
                 <button type="submit" disabled={loadingForm} style={{
@@ -3061,7 +3061,7 @@ function ContactPage({ t, page, siteConfig }) {
                   cursor: "pointer",
                   marginTop: "8px"
                 }}>
-                  {loadingForm ? "..." : (isUz ? "Yuborish" : "Отправить")}
+                  {loadingForm ? "..." : (lang === "ru" ? "Отправить" : (lang === "uzk" ? convertText("Yuborish", true) : "Yuborish"))}
                 </button>
               </form>
             )}
@@ -3096,18 +3096,18 @@ function AuthorPage({ author, stories, lang, onOpen, onBack, savedIds, onToggleS
     <main className="section">
       <div className="section-inner">
         <button className="article-back-btn" onClick={onBack} style={{marginBottom:24}}>
-          <span>&#8592;</span> {isUz ? "Orqaga" : "Назад"}
+          <span>&#8592;</span> {lang === "ru" ? "Назад" : (lang === "uzk" ? convertText("Orqaga", true) : "Orqaga")}
         </button>
         <div className="author-page-header">
           <div className="author-page-avatar">{initials}</div>
           <div>
             <h1 className="author-page-name">{author}</h1>
-            <p className="author-page-count">{authorStories.length} {isUz ? "ta maqola" : "материалов"}</p>
+            <p className="author-page-count">{authorStories.length} {lang === "ru" ? "материалов" : (lang === "uzk" ? convertText("ta maqola", true) : "ta maqola")}</p>
           </div>
         </div>
         <div className="stories-grid" style={{marginTop:32}}>
           {authorStories.length === 0 ? (
-            <p style={{color:"var(--muted)"}}>{isUz ? "Maqolalar topilmadi" : "Материалы не найдены"}</p>
+            <p style={{color:"var(--muted)"}}>{lang === "ru" ? "Материалы не найдены" : (lang === "uzk" ? convertText("Maqolalar topilmadi", true) : "Maqolalar topilmadi")}</p>
           ) : authorStories.map(story => (
             <StoryCard key={story.id} story={story} savedIds={savedIds} onToggleSave={onToggleSave}
               onOpen={() => onOpen(story)} />
@@ -3125,17 +3125,17 @@ function TagPage({ tag, stories, lang, onOpen, onBack, savedIds, onToggleSave })
     <main className="section">
       <div className="section-inner">
         <button className="article-back-btn" onClick={onBack} style={{marginBottom:24}}>
-          <span>&#8592;</span> {isUz ? "Orqaga" : "Назад"}
+          <span>&#8592;</span> {lang === "ru" ? "Назад" : (lang === "uzk" ? convertText("Orqaga", true) : "Orqaga")}
         </button>
         <div className="section-head">
           <div>
             <h2 className="section-title">🏷️ #{tag}</h2>
-            <p className="section-note">{tagStories.length} {isUz ? "ta maqola" : "материалов"}</p>
+            <p className="section-note">{tagStories.length} {lang === "ru" ? "материалов" : (lang === "uzk" ? convertText("ta maqola", true) : "ta maqola")}</p>
           </div>
         </div>
         <div className="stories-grid" style={{marginTop:24}}>
           {tagStories.length === 0 ? (
-            <p style={{color:"var(--muted)"}}>{isUz ? "Bu teg bo'yicha maqolalar topilmadi" : "Материалы по этому тегу не найдены"}</p>
+            <p style={{color:"var(--muted)"}}>{lang === "ru" ? "Материалы по этому тегу не найдены" : (lang === "uzk" ? convertText("Bu teg bo'yicha maqolalar topilmadi", true) : "Bu teg bo'yicha maqolalar topilmadi")}</p>
           ) : tagStories.map(story => (
             <StoryCard key={story.id} story={story} savedIds={savedIds} onToggleSave={onToggleSave}
               onOpen={() => onOpen(story)} />
@@ -3261,7 +3261,7 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
     if (!commentText.trim()) return;
     const payload = {
       storyId: story.id,
-      name: commentName.trim() || (isUz ? "Mehmon" : "Гость"),
+      name: commentName.trim() || (lang === "ru" ? "Гость" : (lang === "uzk" ? convertText("Mehmon", true) : "Mehmon")),
       text: commentText.trim()
     };
     try {
@@ -3275,7 +3275,7 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
         setCommentName("");
         setCommentSent(true);
         setTimeout(() => setCommentSent(false), 3000);
-        alert(isUz ? "✓ Izohingiz yuborildi. Moderator tasdiqlaganidan so'ng saytda ko'rinadi." : "✓ Ваш комментарий отправлен. Он появится после модерации.");
+        alert(lang === "ru" ? "✓ Ваш комментарий отправлен. Он появится после модерации." : (lang === "uzk" ? convertText("✓ Izohingiz yuborildi. Moderator tasdiqlaganidan so'ng saytda ko'rinadi.", true) : "✓ Izohingiz yuborildi. Moderator tasdiqlaganidan so'ng saytda ko'rinadi."));
       }
     } catch (err) {
       alert("Xatolik yuz berdi");
@@ -3353,7 +3353,7 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
 
             {headings.length > 1 && (
               <nav className="toc-box">
-                <strong className="toc-title">{isUz ? "📋 Mundarija" : "📋 Содержание"}</strong>
+                <strong className="toc-title">{lang === "ru" ? "📋 Содержание" : (lang === "uzk" ? convertText("📋 Mundarija", true) : "📋 Mundarija")}</strong>
                 <ol className="toc-list">
                   {headings.map((h, i) => (
                     <li key={i}><a href={`#heading-${i}`} className="toc-link">{h}</a></li>
@@ -3391,7 +3391,7 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
               const emojis = ["👍","❤️","😮","😂","😢"];
               return (
                 <div className="reactions-row">
-                  <span className="reactions-label">{isUz ? "Fikr bildiring:" : "Реакция:"}</span>
+                  <span className="reactions-label">{lang === "ru" ? "Реакция:" : (lang === "uzk" ? convertText("Fikr bildiring:", true) : "Fikr bildiring:")}</span>
                   {emojis.map(emoji => (
                     <button
                       key={emoji}
@@ -3426,14 +3426,14 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
                 className={`bookmark-btn ${savedIds.includes(story.id) ? "saved" : ""}`}
                 onClick={() => onToggleSave && onToggleSave(story.id)}
               >{savedIds.includes(story.id) ? "★ Saqlangan" : "☆ Saqlash"}</button>
-              <button className="share-btn" onClick={() => window.print()}>🖨️ {isUz ? "Chop etish" : "Печать"}</button>
+              <button className="share-btn" onClick={() => window.print()}>🖨️ {lang === "ru" ? "Печать" : (lang === "uzk" ? convertText("Chop etish", true) : "Chop etish")}</button>
             </div>
           </div>
         </article>
 
         {readMore.length > 0 && (
           <section className="article-related">
-            <h2 className="section-title">{isUz ? "O'xshash maqolalar" : "Похожие материалы"}</h2>
+            <h2 className="section-title">{lang === "ru" ? "Похожие материалы" : (lang === "uzk" ? convertText("O'xshash maqolalar", true) : "O'xshash maqolalar")}</h2>
             <div className="article-related-grid">
               {readMore.map(s => (
                 <article key={s.id} className="story-card">
@@ -3457,21 +3457,21 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
 
         <section className="comments-section">
           <h2 className="section-title">
-            💬 {isUz ? "Izohlar" : "Комментарии"}
+            💬 {lang === "ru" ? "Комментарии" : (lang === "uzk" ? convertText("Izohlar", true) : "Izohlar")}
             {comments.length > 0 && <span className="comments-count">{comments.length}</span>}
           </h2>
 
           <form className="comment-form" onSubmit={submitComment}>
             <input
               className="comment-input"
-              placeholder={isUz ? "Ismingiz (ixtiyoriy)" : "Ваше имя (необязательно)"}
+              placeholder={lang === "ru" ? "Ваше имя (необязательно)" : (lang === "uzk" ? convertText("Ismingiz (ixtiyoriy)", true) : "Ismingiz (ixtiyoriy)")}
               value={commentName}
               onChange={e => setCommentName(e.target.value)}
               maxLength={60}
             />
             <textarea
               className="comment-textarea"
-              placeholder={isUz ? "Fikringizni yozing..." : "Напишите ваш комментарий..."}
+              placeholder={lang === "ru" ? "Напишите ваш комментарий..." : (lang === "uzk" ? convertText("Fikringizni yozing...", true) : "Fikringizni yozing...")}
               value={commentText}
               onChange={e => setCommentText(e.target.value)}
               rows={3}
@@ -3479,9 +3479,9 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
               required
             />
             <div className="comment-form-footer">
-              {commentSent && <span className="comment-sent">✓ {isUz ? "Izoh qo'shildi!" : "Комментарий добавлен!"}</span>}
+              {commentSent && <span className="comment-sent">✓ {lang === "ru" ? "Комментарий добавлен!" : (lang === "uzk" ? convertText("Izoh qo'shildi!", true) : "Izoh qo'shildi!")}</span>}
               <button type="submit" className="adm-btn primary" style={{marginLeft:"auto"}}>
-                {isUz ? "Yuborish" : "Отправить"}
+                {lang === "ru" ? "Отправить" : (lang === "uzk" ? convertText("Yuborish", true) : "Yuborish")}
               </button>
             </div>
           </form>
@@ -3489,7 +3489,7 @@ function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = []
           {comments.length === 0 ? (
             <div className="comments-empty">
               <span>💬</span>
-              <p>{isUz ? "Hozircha izoh yo'q. Birinchi bo'ling!" : "Комментариев пока нет. Будьте первым!"}</p>
+              <p>{lang === "ru" ? "Комментариев пока нет. Будьте первым!" : (lang === "uzk" ? convertText("Hozircha izoh yo'q. Birinchi bo'ling!", true) : "Hozircha izoh yo'q. Birinchi bo'ling!")}</p>
             </div>
           ) : (
             <div className="comments-list">
@@ -8672,7 +8672,7 @@ function VideoPage({ lang, items = [], onOpen }) {
       <main className="section">
         <div className="section-inner" style={{textAlign: "center", padding: "80px 20px"}}>
           <span>🎥</span>
-          <h2 style={{marginTop: "16px"}}>{isUz ? "Hozircha videolar yo'q" : "Видео пока отсутствуют"}</h2>
+          <h2 style={{marginTop: "16px"}}>{lang === "ru" ? "Видео пока отсутствуют" : (lang === "uzk" ? convertText("Hozircha videolar yo'q", true) : "Hozircha videolar yo'q")}</h2>
         </div>
       </main>
     );
@@ -8682,9 +8682,9 @@ function VideoPage({ lang, items = [], onOpen }) {
     <main className="section">
       <div className="section-inner">
         <div className="category-masthead">
-          <span>{isUz ? "Yangiliklar portali" : "Портал новостей"}</span>
-          <h1>{isUz ? "Video gallereyasi" : "Видеогалерея"}</h1>
-          <p>{isUz ? "Kunning eng muhim videolari va sharhlari" : "Самые важные видео дня и видеообзоры"}</p>
+          <span>{lang === "ru" ? "Портал новостей" : (lang === "uzk" ? convertText("Yangiliklar portali", true) : "Yangiliklar portali")}</span>
+          <h1>{lang === "ru" ? "Видеогалерея" : (lang === "uzk" ? convertText("Video gallereyasi", true) : "Video gallereyasi")}</h1>
+          <p>{lang === "ru" ? "Самые важные видео дня и видеообзоры" : (lang === "uzk" ? convertText("Kunning eng muhim videolari va sharhlari", true) : "Kunning eng muhim videolari va sharhlari")}</p>
         </div>
 
         <div style={{display: "flex", flexDirection: "column", gap: "32px", marginTop: "32px"}}>
@@ -8696,7 +8696,7 @@ function VideoPage({ lang, items = [], onOpen }) {
                 type: "video",
                 title: featured[1],
                 time: featured[2] ? (featured[2].split("|")[1] || "").trim() : "",
-                category: featured[2] ? (featured[2].split("|")[0] || "").trim() : (isUz ? "Video" : "Видео"),
+                category: featured[2] ? (featured[2].split("|")[0] || "").trim() : (lang === "ru" ? "Видео" : (lang === "uzk" ? convertText("Video", true) : "Video")),
                 image: featured[3],
                 url: featured[4],
                 summary: featured[5] || "",
@@ -8711,13 +8711,13 @@ function VideoPage({ lang, items = [], onOpen }) {
               <div className="media-featured-overlay" style={{position: "absolute", inset: 0, background: "rgba(0,0,0,0.3)"}} />
               <span className="media-featured-icon video" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "64px", height: "64px", background: "var(--brand)", color: "#fff", display: "grid", placeItems: "center", borderRadius: "50%", fontSize: "24px", fontWeight: "bold"}}>▶</span>
               <div className="media-featured-meta" style={{position: "absolute", bottom: "16px", left: "16px", display: "flex", gap: "10px", alignItems: "center"}}>
-                <span className="media-type-badge video" style={{background: "#ff3b30", color: "#fff", padding: "2px 8px", borderRadius: "4px", fontSize: "12px", fontWeight: 700}}>{isUz ? "Video" : "Видео"}</span>
+                <span className="media-type-badge video" style={{background: "#ff3b30", color: "#fff", padding: "2px 8px", borderRadius: "4px", fontSize: "12px", fontWeight: 700}}>{lang === "ru" ? "Видео" : (lang === "uzk" ? convertText("Video", true) : "Video")}</span>
                 <span style={{color: "#fff", fontSize: "13px"}}>{featured[2]}</span>
               </div>
             </div>
             <div className="media-featured-body" style={{padding: "24px", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
               <strong style={{fontSize: "22px", lineHeight: "1.4", color: "var(--ink)", display: "block"}}>{featured[1]}</strong>
-              <button className="media-play-btn" style={{alignSelf: "flex-start", background: "var(--brand)", color: "#fff", border: 0, padding: "10px 20px", borderRadius: "8px", fontWeight: 700, cursor: "pointer"}} type="button">{isUz ? "Tomosha qilish →" : "Смотреть →"}</button>
+              <button className="media-play-btn" style={{alignSelf: "flex-start", background: "var(--brand)", color: "#fff", border: 0, padding: "10px 20px", borderRadius: "8px", fontWeight: 700, cursor: "pointer"}} type="button">{lang === "ru" ? "Смотреть →" : (lang === "uzk" ? convertText("Tomosha qilish →", true) : "Tomosha qilish →")}</button>
             </div>
           </article>
 
@@ -8731,7 +8731,7 @@ function VideoPage({ lang, items = [], onOpen }) {
                     type: "video",
                     title: itemTitle,
                     time: meta ? (meta.split("|")[1] || "").trim() : "",
-                    category: meta ? (meta.split("|")[0] || "").trim() : (isUz ? "Video" : "Видео"),
+                    category: meta ? (meta.split("|")[0] || "").trim() : (lang === "ru" ? "Видео" : (lang === "uzk" ? convertText("Video", true) : "Video")),
                     image: image,
                     url: url,
                     summary: summary || "",
