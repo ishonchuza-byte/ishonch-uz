@@ -640,7 +640,7 @@ function renderLiveSeoWidget(item, type = 'story') {
 
 const DEFAULT_SITE_CONFIG = {
   siteName: "Ishonch.uz",
-  logoUrl: (import.meta.env.VITE_API_URL || "") + "/uploads/logo.svg",
+  logoUrl: "",
   footerLogoUrl: "",
   email: "news@ishonch.uz",
   telegram: "https://t.me/ishonch_uz",
@@ -4094,7 +4094,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
       setHomeConfig({
         siteName: siteConfig.siteName || "VATAN",
         tagline: siteConfig.tagline || "",
-        logoUrl: siteConfig.logoUrl || (import.meta.env.VITE_API_URL || "") + "/uploads/logo.svg",
+        logoUrl: siteConfig.logoUrl || "",
         footerLogoUrl: siteConfig.footerLogoUrl || "",
         phone: siteConfig.phone || "",
         email: siteConfig.email || "",
