@@ -1,5 +1,43 @@
 const http = require("http");
+require('dotenv').config();
+const { Storage } = require('@google-cloud/storage');
 const fs = require("fs");
+let gcsBucket = null;
+try {
+  if (process.env.GCS_BUCKET_NAME) {
+    const opts = {};
+    if (process.env.GCS_CLIENT_EMAIL && process.env.GCS_PRIVATE_KEY) {
+      opts.projectId = process.env.GCS_PROJECT_ID;
+      opts.credentials = {
+        client_email: process.env.GCS_CLIENT_EMAIL,
+        private_key: process.env.GCS_PRIVATE_KEY.replace(/\\n/g, '\n')
+      };
+    }
+    const storage = new Storage(opts);
+    gcsBucket = storage.bucket(process.env.GCS_BUCKET_NAME);
+  }
+} catch(e) { console.error("GCS init error:", e.message); }
+
+let isGcsUploading = false;
+let pendingGcsUpload = false;
+async function processGcsUpload() {
+  if (!gcsBucket) return;
+  if (isGcsUploading) {
+    pendingGcsUpload = true;
+    return;
+  }
+  isGcsUploading = true;
+  pendingGcsUpload = false;
+  try {
+    await gcsBucket.upload(dbPath, { destination: "db.json", contentType: "application/json" });
+  } catch(e) {
+    console.error("GCS upload db.json error:", e.message);
+  } finally {
+    isGcsUploading = false;
+    if (pendingGcsUpload) processGcsUpload();
+  }
+}
+
 const path = require("path");
 const crypto = require("crypto");
 
@@ -2150,6 +2188,21 @@ function listen(port, attemptsLeft = 20) {
     throw error;
   });
 
+  async function startApp() {
+  if (gcsBucket) {
+    try {
+      const file = gcsBucket.file("db.json");
+      const [exists] = await file.exists();
+      if (exists) {
+        await file.download({ destination: dbPath });
+        console.log("db.json GCS'dan yuklab olindi.");
+      } else {
+        ensureDb();
+        await gcsBucket.upload(dbPath, { destination: "db.json" });
+        console.log("GCS'ga yangi db.json yaratildi.");
+      }
+    } catch(e) { console.error("GCS startup error:", e.message); }
+  }
   server.listen(port, "0.0.0.0", () => {
     console.log(`Ishonch.uz is running locally: http://localhost:${port}`);
     
@@ -2164,6 +2217,8 @@ function listen(port, attemptsLeft = 20) {
       }
     }
   });
+}
+startApp();
 }
 
 listen(preferredPort);
