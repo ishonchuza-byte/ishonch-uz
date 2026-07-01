@@ -853,7 +853,7 @@ async function handleApi(request, response, pathname) {
     sessions.set(token, { expiresAt: Date.now() + sessionTtlMs });
     response.writeHead(200, {
       "Content-Type": "application/json; charset=utf-8",
-      "Set-Cookie": `yk_session=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${sessionTtlMs / 1000}`,
+      "Set-Cookie": `yk_session=${token}; HttpOnly; SameSite=None; Secure; Path=/; Max-Age=${sessionTtlMs / 1000}`,
     });
     response.end(JSON.stringify({ ok: true }));
     return;
@@ -864,7 +864,7 @@ async function handleApi(request, response, pathname) {
     if (token) sessions.delete(token);
     response.writeHead(200, {
       "Content-Type": "application/json; charset=utf-8",
-      "Set-Cookie": "yk_session=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0",
+      "Set-Cookie": "yk_session=; HttpOnly; SameSite=None; Secure; Path=/; Max-Age=0",
     });
     response.end(JSON.stringify({ ok: true }));
     return;

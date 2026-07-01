@@ -4276,8 +4276,9 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
   }, [lang]);
 
   async function api(path, options = {}) {
-    const response = await fetch(path, {
-      credentials: "same-origin",
+    const fullPath = path.startsWith("/") ? (import.meta.env.VITE_API_URL || "") + path : path;
+    const response = await fetch(fullPath, {
+      credentials: "include",
       headers: { "Content-Type": "application/json", ...(options.headers || {}) },
       ...options,
     });
