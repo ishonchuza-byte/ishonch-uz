@@ -4355,7 +4355,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
       await loadAdminStories();
     } catch (error) {
       const staticMessage = "Netlify static hostingda admin panel saqlash funksiyalari ishlamaydi. Admin uchun Node server yoki serverless backend kerak.";
-      notify(error.message === "Server API mavjud emas" || error.message.includes("Netlify static hostingda") ? staticMessage : `${error.message}. Standart parol: ${DEFAULT_PASSWORD}`, "error");
+      notify(error.message === "Server API mavjud emas" || error.message.includes("Netlify static hostingda") ? staticMessage : error.message, "error");
     }
   }
 
@@ -4985,7 +4985,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
     try {
       await api("/api/admin/password", {
         method: "POST",
-        body: JSON.stringify({ currentPassword, password: newPassword.trim() })
+        body: JSON.stringify({ currentPassword: currentPassword.trim(), password: newPassword.trim() })
       });
       setCurrentPassword("");
       setNewPassword("");
@@ -5451,7 +5451,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
             <button className="admin-login-btn" type="submit">Kirish →</button>
             {message && <div className={`admin-notify ${msgType}`}>{message}</div>}
           </form>
-          <p className="admin-login-hint">Standart parol: <code>admin2026</code></p>
+          <p className="admin-login-hint">Xavfsizlik maqsadida login va parolingizni kiritishingiz so'raladi.</p>
         </div>
       </div>
     );
