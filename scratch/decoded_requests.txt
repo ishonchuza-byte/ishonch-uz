@@ -1,0 +1,150 @@
+[2026-06-25T08:49:29Z]:
+<USER_REQUEST>
+сайтни ишга тушир локалда
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T13:49:29+05:00.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Gemini 3.5 Flash (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+--------------------------------------------------
+[2026-06-25T09:01:22Z]:
+<USER_REQUEST>
+сайтни пастига шундай қилиб бергин онлайн пайтда нечта кузатди кун давомида нечта одам кирди бу тизимни ўчириб ёқишни ҳам қилгин 
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:01:22+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:08:23Z]:
+<USER_REQUEST>
+бошла
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:08:23+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:26:38Z]:
+<USER_REQUEST>
+сайтни дизайнига мослаштириб юбор
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:26:38+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:28:38Z]:
+<USER_REQUEST>
+админда ўзгартириб бўлсин
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:28:38+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:29:02Z]:
+<USER_REQUEST>
+буни ҳам ўзгартириб бўлсин 
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:29:02+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:32:26Z]:
+<USER_REQUEST>
+пастки логони кўринайдиган қилиб бер
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:32:26+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:33:33Z]:
+<USER_REQUEST>
+пастки лого кўринмаяпти оқ қилиб 
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:33:33+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:35:05Z]:
+<USER_REQUEST>
+сайт очилганда сўнги янгиликлар билан очилсин
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:35:05+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:40:04Z]:
+<USER_REQUEST>
+сайт очилган асосий саҳифаси билан очилсин
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:40:04+05:00.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.5 Flash (High) to Gemini 3.5 Flash (Medium). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+--------------------------------------------------
+[2026-06-25T09:41:50Z]:
+<USER_REQUEST>
+пастки логони ранги ўзгармади кўринмаяпти кўринайдиган қилиб бер
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:41:50+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:45:37Z]:
+<USER_REQUEST>
+пастига фақат шу логони қўйгин
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:45:37+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:46:44Z]:
+<USER_REQUEST>
+расмлар ораси ёпишиб қолган шуларни сал очгин
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:46:44+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T09:48:30Z]:
+<USER_REQUEST>
+пастки логони алмаштириш учун админга функсия қўйшгинэ
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T14:48:30+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T10:08:26Z]:
+<USER_REQUEST>
+расм юклаш функсиясини қўйиб ишлатиб бер
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T15:08:26+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T10:11:16Z]:
+<USER_REQUEST>
+сарлавҳа ва подзнак расм остидан кўринсин чиройли дизайнда
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T15:11:16+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T10:11:39Z]:
+<USER_REQUEST>
+расмни юкладим лекин ишламади текшириб бер
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T15:11:39+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------
+[2026-06-25T10:16:18Z]:
+<USER_REQUEST>
+мақола пастига тушсин
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-25T15:16:18+05:00.
+</ADDITIONAL_METADATA>
+--------------------------------------------------

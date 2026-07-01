@@ -1,0 +1,16 @@
+# Server files (not needed for static hosting)
+server.js
+server.log
+server.err.log
+server.out.log
+run-server.cmd
+
+# Data files (blocked by redirects, not needed)
+data/
+
+# Package files (not needed for static hosting)
+package.json
+package-lock.json
+
+# Development files
+README.md

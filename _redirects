@@ -1,0 +1,12 @@
+/api/stories /stories.json 200!
+/api/public/videos /videos.json 200!
+/api/public/photos /photos.json 200!
+/api/admin/* /api-unavailable.json 404!
+/admin /index.html 200
+/data/* /404.html 404!
+/server.js /404.html 404!
+/package.json /404.html 404!
+/server.log /404.html 404!
+/server.out.log /404.html 404!
+/server.err.log /404.html 404!
+/* /index.html 200

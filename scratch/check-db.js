@@ -1,0 +1,12 @@
+const fs = require('fs');
+const db = JSON.parse(fs.readFileSync('data/db.json', 'utf8'));
+console.log('--- DATABASE STATUS ---');
+console.log('Stories:', Object.keys(db.stories).map(k => `${k}: ${db.stories[k].length}`).join(', '));
+console.log('Quotes:', db.quotes.length);
+console.log('Journals:', db.journals.length);
+console.log('Messages:', db.messages.length);
+console.log('Comments:', db.comments.length);
+console.log('Authors:', db.authors.length);
+console.log('Subscribers:', db.subscribers.length);
+console.log('Payments:', db.payments.length);
+console.log('SentNewsletters:', db.sentNewsletters.length);

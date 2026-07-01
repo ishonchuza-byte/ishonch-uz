@@ -1,0 +1,21 @@
+{
+  "name": "yangi-kun-news",
+  "version": "1.0.0",
+  "private": true,
+  "description": "7 sahifali o'zbekcha va ruscha React yangiliklar sayti.",
+  "scripts": {
+    "dev:frontend": "vite",
+    "dev:backend": "node server.js",
+    "build": "vite build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
+    "cors": "^2.8.6",
+    "dompurify": "^3.4.11",
+    "pngjs": "^7.0.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "vite": "^8.1.2"
+  }
+}
