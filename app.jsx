@@ -751,7 +751,7 @@ function RichEditor({ value, onChange }) {
       }
       const res = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/upload", {
         method: "POST",
-        credentials: "same-origin",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dataUrl: compressedDataUrl }),
       });
@@ -3886,7 +3886,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
       setNewsletterHistory(nlData.sentNewsletters || []);
 
       try {
-        const lhRes = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/login-history", { credentials: "same-origin" });
+        const lhRes = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/login-history", { credentials: "include" });
         if (lhRes.ok) {
           const lhData = await lhRes.json();
           setLoginHistory(lhData.history || []);
@@ -4123,7 +4123,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
 
   async function loadMedia() {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/media", { credentials: "same-origin" });
+      const res = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/media", { credentials: "include" });
       const data = await res.json();
       setMediaFiles(data.media || []);
     } catch {}
@@ -4140,7 +4140,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
       }
       const res = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/upload", {
         method: "POST",
-        credentials: "same-origin",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dataUrl: compressedDataUrl }),
       });
@@ -4167,7 +4167,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
       if (!compressedDataUrl) return;
       const res = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/upload", {
         method: "POST",
-        credentials: "same-origin",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dataUrl: compressedDataUrl }),
       });
@@ -4192,7 +4192,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
   async function deleteMedia(name) {
     if (!confirm(`"${name}" ni o'chirasizmi?`)) return;
     try {
-      await fetch((import.meta.env.VITE_API_URL || "") + `/api/admin/media/${name}`, { method: "DELETE", credentials: "same-origin" });
+      await fetch((import.meta.env.VITE_API_URL || "") + `/api/admin/media/${name}`, { method: "DELETE", credentials: "include" });
       await loadMedia();
       notify("✓ O'chirildi.", "success");
     } catch { notify("Xatolik", "error"); }
@@ -4707,7 +4707,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
       if (!compressedDataUrl) return;
       const res = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/upload", {
         method: "POST",
-        credentials: "same-origin",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dataUrl: compressedDataUrl }),
       });
@@ -4762,7 +4762,7 @@ function AdminPanel({ lang, setLang, allStories, stories, setAllStories, refresh
       if (!compressedDataUrl) return;
       const res = await fetch((import.meta.env.VITE_API_URL || "") + "/api/admin/upload", {
         method: "POST",
-        credentials: "same-origin",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dataUrl: compressedDataUrl }),
       });
