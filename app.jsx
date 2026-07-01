@@ -1493,6 +1493,7 @@ function App() {
         }
         
         if (foundStory) {
+          let targetLang = lang;
           if (foundLang && foundLang !== lang) {
             const isLangActive = (foundLang === "uz" && siteConfig.langUzActive !== false) ||
                                  (foundLang === "ru" && siteConfig.langRuActive !== false) ||
@@ -1500,9 +1501,35 @@ function App() {
             if (isLangActive) {
               setLang(foundLang);
               localStorage.setItem("yk-lang", foundLang);
+              targetLang = foundLang;
             }
           }
-          setActiveStory(foundStory);
+          
+          let finalStory = foundStory;
+          if (targetLang === "uzk") {
+            const parentUz = foundStory.category;
+            let subcategory = foundStory.subcategory ? convertText(foundStory.subcategory, true) : "";
+            if (parentUz && foundStory.subcategory) {
+              const parentCyr = cyrCategoryLabels[parentUz] || convertText(parentUz, true);
+              const subsCyr = siteConfig?.subcategoriesUzk?.[parentCyr];
+              const parentUzSubs = siteConfig?.subcategoriesUz?.[parentUz];
+              if (subsCyr && parentUzSubs) {
+                const idx = parentUzSubs.indexOf(foundStory.subcategory);
+                if (idx !== -1 && subsCyr[idx]) subcategory = subsCyr[idx];
+              }
+            }
+            finalStory = {
+              ...foundStory,
+              title: convertText(foundStory.title, true),
+              summary: convertText(foundStory.summary, true),
+              body: convertText(foundStory.body, true),
+              category: cyrCategoryLabels[foundStory.category] || convertText(foundStory.category, true),
+              author: convertText(foundStory.author, true),
+              subcategory: subcategory
+            };
+          }
+          
+          setActiveStory(finalStory);
           window.scrollTo({ top: 0, behavior: "auto" });
         }
       } else if (pathname === '/admin' || window.location.hash === '#admin') {
