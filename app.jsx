@@ -2354,20 +2354,22 @@ function Logo({ height = 36, logoUrl = "", siteName = "Ishonch.uz", textColor, f
     );
   }
 
+  const isBlack = textColor === "#ffffff";
+
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 36" style={{ height: height, width: "auto", display: "inline-block", verticalAlign: "middle" }}>
       <defs>
-        <pattern id="logo-stripes" width="36" height="3.5" patternUnits="userSpaceOnUse">
+        <pattern id={`logo-stripes-${isBlack ? 'black' : 'blue'}`} width="36" height="3.5" patternUnits="userSpaceOnUse">
           <line x1="0" y1="1.75" x2="36" y2="1.75" stroke="#ffffff" strokeWidth="1.2" />
         </pattern>
-        <mask id="logo-circle-mask">
+        <mask id={`logo-circle-mask-${isBlack ? 'black' : 'blue'}`}>
           <circle cx="18" cy="18" r="14" fill="#ffffff" />
         </mask>
       </defs>
-      <circle cx="18" cy="18" r="14" fill="#6ba4ff" opacity="0.6" />
-      <circle cx="18" cy="18" r="14" fill="url(#logo-stripes)" mask="url(#logo-circle-mask)" />
-      <path d="M11 18l5 5 10-10" fill="none" stroke="#ffffff" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M11 18l5 5 10-10" fill="none" stroke="#0e5ff2" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {!isBlack && <circle cx="18" cy="18" r="14" fill="#6ba4ff" opacity="0.6" />}
+      <circle cx="18" cy="18" r="14" fill={`url(#logo-stripes-${isBlack ? 'black' : 'blue'})`} mask={`url(#logo-circle-mask-${isBlack ? 'black' : 'blue'})`} />
+      <path d="M11 18l5 5 10-10" fill="none" stroke={isBlack ? "#101725" : "#ffffff"} strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11 18l5 5 10-10" fill="none" stroke={isBlack ? "#ffffff" : "#0e5ff2"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       <text x="40" y="25" fontFamily="Inter, ui-sans-serif, system-ui, sans-serif" fontWeight="900" fontSize="21" fill={textColor || "currentColor"} letterSpacing="-0.5">{siteName}</text>
     </svg>
   );
