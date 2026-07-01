@@ -5,13 +5,20 @@ const fs = require("fs");
 let gcsBucket = null;
 try {
   if (process.env.GCS_BUCKET_NAME) {
+    console.log("GCS BUCKET PRESENT");
+    if (!process.env.GCS_CLIENT_EMAIL) console.log("GCS_CLIENT_EMAIL IS MISSING!");
+    if (!process.env.GCS_PRIVATE_KEY) console.log("GCS_PRIVATE_KEY IS MISSING!");
+    
     const opts = {};
     if (process.env.GCS_CLIENT_EMAIL && process.env.GCS_PRIVATE_KEY) {
+      console.log("BOTH CREDENTIALS PRESENT");
       opts.projectId = process.env.GCS_PROJECT_ID;
       opts.credentials = {
         client_email: process.env.GCS_CLIENT_EMAIL,
         private_key: process.env.GCS_PRIVATE_KEY.replace(/\\n/g, '\n')
       };
+    } else {
+      console.log("WARNING: Proceeding without opts.credentials");
     }
     const storage = new Storage(opts);
     gcsBucket = storage.bucket(process.env.GCS_BUCKET_NAME);
