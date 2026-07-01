@@ -2115,7 +2115,13 @@ ensureDb();
 
 const server = http.createServer((request, response) => {
   // CORS ruxsatlari (Backend alohida turganda Netlify ulanishi uchun)
-  response.setHeader("Access-Control-Allow-Origin", "*");
+  const origin = request.headers.origin;
+  if (origin) {
+    response.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+  }
+  response.setHeader("Access-Control-Allow-Credentials", "true");
   response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
