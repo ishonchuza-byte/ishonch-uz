@@ -3,6 +3,32 @@ import ReactDOM from 'react-dom/client';
 import DOMPurify from 'dompurify';
 import './styles.css';
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("ErrorBoundary caught:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '20px', color: 'red', background: '#fee' }}>
+          <h2>Saytda xatolik yuz berdi:</h2>
+          <pre>{this.state.error && this.state.error.toString()}</pre>
+          <pre>{this.state.error && this.state.error.stack}</pre>
+          <button onClick={() => window.location.reload()} style={{padding: '10px', marginTop: '10px'}}>Saytni yangilash</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const images = {
   city: "url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1f?auto=format&fit=crop&w=1600&q=80')",
   parliament: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1200&q=80",
