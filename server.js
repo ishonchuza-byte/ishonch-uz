@@ -12,10 +12,19 @@ try {
     const opts = {};
     if (process.env.GCS_CLIENT_EMAIL && process.env.GCS_PRIVATE_KEY) {
       console.log("BOTH CREDENTIALS PRESENT");
+      let pKey = process.env.GCS_PRIVATE_KEY || '';
+      if (pKey.startsWith('"') && pKey.endsWith('"')) pKey = pKey.slice(1, -1);
+      pKey = pKey.replace(/\\n/g, '\n');
+      const match = pKey.match(/-----BEGIN PRIVATE KEY-----([\\s\\S]+)-----END PRIVATE KEY-----/);
+      if (match) {
+        const b64 = match[1].replace(/\\s+/g, '');
+        const chunks = b64.match(/.{1,64}/g) || [];
+        pKey = "-----BEGIN PRIVATE KEY-----\\n" + chunks.join('\\n') + "\\n-----END PRIVATE KEY-----\\n";
+      }
       opts.projectId = process.env.GCS_PROJECT_ID;
       opts.credentials = {
         client_email: process.env.GCS_CLIENT_EMAIL,
-        private_key: process.env.GCS_PRIVATE_KEY.replace(/\\n/g, '\n')
+        private_key: pKey
       };
     } else {
       console.log("WARNING: Proceeding without opts.credentials");
