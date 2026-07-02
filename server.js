@@ -1876,7 +1876,16 @@ Faqat JSON formatida javob bering, boshqa hech qanday izoh qo'shmang. JSON forma
     const subtype = match[3];
     const ext = subtype === "jpeg" ? "jpg" : (subtype === "svg+xml" ? "svg" : subtype);
     const filename = `${Date.now()}-${crypto.randomBytes(8).toString("hex")}.${ext}`;
-    fs.writeFileSync(path.join(uploadDir, filename), Buffer.from(match[4], "base64"));
+    const buffer = Buffer.from(match[4], "base64");
+      fs.writeFileSync(path.join(uploadDir, filename), buffer);
+      if (gcsBucket) {
+        try {
+          await gcsBucket.file("uploads/" + filename).save(buffer, { contentType: match[1], resumable: false });
+          const gcsUrl = "https://storage.googleapis.com/" + process.env.GCS_BUCKET + "/uploads/" + filename;
+          sendJson(response, 200, { url: gcsUrl, type: match[2] });
+          return;
+        } catch(e) { console.error("GCS img upload error", e); }
+      }
     sendJson(response, 200, { url: `/uploads/${filename}`, type: match[2] });
     return;
   }
