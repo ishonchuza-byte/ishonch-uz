@@ -3179,7 +3179,7 @@ function getYouTubeEmbedUrl(url) {
   return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
 }
 
-function ArticlePage({ t, story, stories, onClose, onOpen, onView, savedIds = [], onToggleSave, copiedShare, setCopiedShare, reactions = {}, addReaction, onAuthorClick, onTagClick }) {
+function ArticlePage({ lang, t, story, stories, onClose, onOpen, onView, savedIds = [], onToggleSave, copiedShare, setCopiedShare, reactions = {}, addReaction, onAuthorClick, onTagClick }) {
   const initials = (story.author || "IU").split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
   const isHtml = story.body && /<[a-z]/.test(story.body);
   const paragraphs = isHtml ? [] : (story.body || story.summary || "").split("\n\n").filter(Boolean);
